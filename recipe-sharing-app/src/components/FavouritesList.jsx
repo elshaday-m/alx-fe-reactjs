@@ -1,12 +1,17 @@
+import { useMemo } from "react";
 import { useRecipeStore } from "./recipeStore";
 import { Link } from "react-router-dom";
 
 const FavoritesList = () => {
   const recipes = useRecipeStore((state) => state.recipes);
-  const favorites = useRecipeStore((state) =>
-    state.favorites.map((id) => recipes.find((r) => r.id === id))
-  );
+  const favoriteIds = useRecipeStore((state) => state.favorites);
   const removeFavorite = useRecipeStore((state) => state.removeFavorite);
+
+  const favorites = useMemo(
+    () =>
+      favoriteIds.map((id) => recipes.find((r) => r.id === id)).filter(Boolean),
+    [favoriteIds, recipes]
+  );
 
   if (favorites.length === 0) return <p>No favorite recipes yet.</p>;
 
