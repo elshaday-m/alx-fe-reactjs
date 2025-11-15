@@ -4,7 +4,7 @@ import AddRecipeForm from "./components/AddRecipeForm";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
 import SearchBar from "./components/SearchBar";
-import FavoritesList from "./components/FavouritesList";
+import FavoritesList from "./components/FavoritesList";
 import RecommendationsList from "./components/RecommendationsList";
 import { useRecipeStore } from "./components/recipeStore";
 
