@@ -8,6 +8,7 @@ function Navbar() {
         backgroundColor: "navy",
         color: "white",
         display: "flex",
+        justifyContent: "space-between",
         gap: "20px",
       }}
     >
