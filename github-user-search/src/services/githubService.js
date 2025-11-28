@@ -11,17 +11,21 @@ const githubApi = axios.create({
  * @param {Object} params - { username, location, minRepos }
  */
 export const fetchAdvancedUsers = async ({ username, location, minRepos }) => {
-  let query = "";
-  if (username) query += `${username} in:login `;
-  if (location) query += `location:${location} `;
-  if (minRepos) query += `repos:>=${minRepos}`;
+  let queryParts = [];
+  if (username) queryParts.push(`${username} in:login`);
+  if (location) queryParts.push(`location:${location}`);
+  if (minRepos) queryParts.push(`repos:>=${minRepos}`);
+
+  if (queryParts.length === 0) return [];
+
+  const query = queryParts.join(" ");
 
   const response = await githubApi.get(
     `/search/users?q=${encodeURIComponent(query)}&per_page=20`
   );
+
   const users = response.data.items;
 
-  // Fetch additional user details (like location and repos count) for each user
   const detailedUsers = await Promise.all(
     users.map(async (user) => {
       const res = await githubApi.get(`/users/${user.login}`);
