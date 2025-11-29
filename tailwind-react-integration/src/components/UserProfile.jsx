@@ -6,7 +6,9 @@ function UserProfile() {
         alt="User"
         className="rounded-full w-36 h-36 mx-auto"
       />
-      <h1 className="text-xl text-blue-800 my-4 text-center">John Doe</h1>
+      <h1 className="text-sm text-lg md:text-xl text-blue-800 my-4 text-center">
+        John Doe
+      </h1>
       <p className="text-gray-600 text-base text-center">
         Developer at Example Co. Loves to write code and explore new
         technologies.
