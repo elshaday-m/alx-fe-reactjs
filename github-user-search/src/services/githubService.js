@@ -7,6 +7,11 @@ const githubApi = axios.create({
 });
 
 /**
+ * Advanced user search
+ * API endpoint reference: https://api.github.com/search/users?q
+ */
+
+/**
  * Fetch users based on advanced search criteria
  * @param {Object} params - { username, location, minRepos }
  */
