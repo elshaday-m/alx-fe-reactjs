@@ -15,7 +15,7 @@ const githubApi = axios.create({
  * Fetch users based on advanced search criteria
  * @param {Object} params - { username, location, minRepos }
  */
-export const fetchAdvancedUsers = async ({ username, location, minRepos }) => {
+export const fetchUserData = async ({ username, location, minRepos }) => {
   let queryParts = [];
   if (username) queryParts.push(`${username} in:login`);
   if (location) queryParts.push(`location:${location}`);
