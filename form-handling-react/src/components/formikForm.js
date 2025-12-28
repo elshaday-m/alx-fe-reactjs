@@ -1,7 +1,8 @@
-import { useFormik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const useRegistrationForm = () => {
+const FormikForm = () => {
+  // Validation schema
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
     email: Yup.string()
@@ -12,14 +13,9 @@ const useRegistrationForm = () => {
       .required("Password is required"),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
-    validationSchema,
-    onSubmit: async (values, { resetForm }) => {
+  // Submit handler
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
       await fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,10 +24,52 @@ const useRegistrationForm = () => {
 
       alert("User registered successfully!");
       resetForm();
-    },
-  });
+    } catch (error) {
+      alert("Registration failed");
+    }
+  };
 
-  return formik;
+  return (
+    <div>
+      <h2>Formik Registration Form</h2>
+      <Formik
+        initialValues={{ username: "", email: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          <div>
+            <Field name="username" placeholder="Username" />
+            <ErrorMessage
+              name="username"
+              component="div"
+              style={{ color: "red" }}
+            />
+          </div>
+
+          <div>
+            <Field name="email" type="email" placeholder="Email" />
+            <ErrorMessage
+              name="email"
+              component="div"
+              style={{ color: "red" }}
+            />
+          </div>
+
+          <div>
+            <Field name="password" type="password" placeholder="Password" />
+            <ErrorMessage
+              name="password"
+              component="div"
+              style={{ color: "red" }}
+            />
+          </div>
+
+          <button type="submit">Register</button>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 
-export default useRegistrationForm;
+export default FormikForm;
