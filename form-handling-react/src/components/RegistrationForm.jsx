@@ -5,28 +5,28 @@ const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState("");
+  const [error, setErrors] = useState("");
   const [success, setSuccess] = useState("");
 
   // Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors("");
     setSuccess("");
 
     // Basic validation: check each field individually
     if (!username) {
-      setError("Username is required");
+      setErrors("Username is required");
       return;
     }
 
     if (!email) {
-      setError("Email is required");
+      setErrors("Email is required");
       return;
     }
 
     if (!password) {
-      setError("Password is required");
+      setErrors("Password is required");
       return;
     }
 
@@ -48,7 +48,7 @@ const RegistrationForm = () => {
         setPassword("");
       }
     } catch (err) {
-      setError("Registration failed");
+      setErrors("Registration failed");
     }
   };
 
