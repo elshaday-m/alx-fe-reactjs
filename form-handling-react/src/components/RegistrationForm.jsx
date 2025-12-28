@@ -14,9 +14,19 @@ const RegistrationForm = () => {
     setError("");
     setSuccess("");
 
-    // Basic validation
-    if (!username || !email || !password) {
-      setError("All fields are required");
+    // Basic validation: check each field individually
+    if (!username) {
+      setError("Username is required");
+      return;
+    }
+
+    if (!email) {
+      setError("Email is required");
+      return;
+    }
+
+    if (!password) {
+      setError("Password is required");
       return;
     }
 
