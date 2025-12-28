@@ -4,24 +4,30 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
+
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+
+    if (!title.trim()) newErrors.title = "Title is required";
+    if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required";
+    else if (ingredients.split(",").length < 2)
+      newErrors.ingredients =
+        "Enter at least 2 ingredients separated by commas";
+
+    if (!steps.trim()) newErrors.steps = "Steps are required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
     setSuccess("");
 
-    // Basic validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required.");
-      return;
-    }
-
-    if (ingredients.split(",").length < 2) {
-      setError("Please enter at least two ingredients separated by commas.");
-      return;
-    }
+    if (!validate()) return; // Stop if validation fails
 
     // Mock submission
     const newRecipe = {
@@ -29,10 +35,10 @@ const AddRecipeForm = () => {
       title,
       summary: steps.slice(0, 100) + "...",
       image: "https://via.placeholder.com/150",
-      ingredients: ingredients.split(",").map((item) => item.trim()),
+      ingredients: ingredients.split(",").map((i) => i.trim()),
       steps: steps
         .split(".")
-        .map((step) => step.trim())
+        .map((s) => s.trim())
         .filter(Boolean),
     };
 
@@ -41,13 +47,13 @@ const AddRecipeForm = () => {
     setTitle("");
     setIngredients("");
     setSteps("");
+    setErrors({});
   };
 
   return (
     <div className="max-w-lg mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6 text-center">Add New Recipe</h1>
 
-      {error && <p className="text-red-500 mb-4">{error}</p>}
       {success && <p className="text-green-500 mb-4">{success}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -60,6 +66,7 @@ const AddRecipeForm = () => {
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter recipe title"
           />
+          {errors.title && <p className="text-red-500 mt-1">{errors.title}</p>}
         </div>
 
         <div>
@@ -73,6 +80,9 @@ const AddRecipeForm = () => {
             placeholder="e.g. 200g spaghetti, 100g bacon, 2 eggs"
             rows={3}
           ></textarea>
+          {errors.ingredients && (
+            <p className="text-red-500 mt-1">{errors.ingredients}</p>
+          )}
         </div>
 
         <div>
@@ -86,6 +96,7 @@ const AddRecipeForm = () => {
             placeholder="Step 1. Step 2. Step 3."
             rows={4}
           ></textarea>
+          {errors.steps && <p className="text-red-500 mt-1">{errors.steps}</p>}
         </div>
 
         <button
