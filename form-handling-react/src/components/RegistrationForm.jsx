@@ -1,54 +1,81 @@
-import useRegistrationForm from "./formikForm";
+import { useState } from "react";
 
 const RegistrationForm = () => {
-  const formik = useRegistrationForm();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // Handle submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    // Basic validation
+    if (!username || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    // Mock API call
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password }),
+        }
+      );
+
+      if (response.ok) {
+        setSuccess("User registered successfully!");
+        setUsername("");
+        setEmail("");
+        setPassword("");
+      }
+    } catch (err) {
+      setError("Registration failed");
+    }
+  };
 
   return (
     <div>
-      <h2>User Registration</h2>
+      <h2>Controlled Registration Form</h2>
 
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.username && formik.errors.username && (
-            <div style={{ color: "red" }}>{formik.errors.username}</div>
-          )}
-        </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p style={{ color: "green" }}>{success}</p>}
 
-        <div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.email && formik.errors.email && (
-            <div style={{ color: "red" }}>{formik.errors.email}</div>
-          )}
-        </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br />
 
-        <div>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.password && formik.errors.password && (
-            <div style={{ color: "red" }}>{formik.errors.password}</div>
-          )}
-        </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br />
 
         <button type="submit">Register</button>
       </form>
