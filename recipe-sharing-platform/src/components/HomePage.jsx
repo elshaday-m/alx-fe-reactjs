@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import data from "../data.json";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    // Load mock data
     setRecipes(data);
   }, []);
 
@@ -29,9 +29,12 @@ const HomePage = () => {
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{recipe.title}</h2>
               <p className="text-gray-700">{recipe.summary}</p>
-              <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              <Link
+                to={`/recipe/${recipe.id}`}
+                className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
                 View Recipe
-              </button>
+              </Link>
             </div>
           </div>
         ))}
