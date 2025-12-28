@@ -10,12 +10,10 @@ import Home from "./components/Home.jsx";
 import Login from "./components/Login.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Profile from "./components/Profile.jsx";
-import ProfileDetails from "./components/ProfileDetails.jsx";
-import ProfileSettings from "./components/ProfileSettings.jsx";
+import BlogPost from "./components/BlogPost.jsx"; // <-- import BlogPost
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
-  // Simple auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
@@ -27,7 +25,6 @@ function App() {
           element={<Login setIsAuthenticated={setIsAuthenticated} />}
         />
 
-        {/* Protected Route Example */}
         <Route
           path="/dashboard"
           element={
@@ -37,7 +34,6 @@ function App() {
           }
         />
 
-        {/* Nested Routes Example */}
         <Route
           path="/profile/:userId/*"
           element={
@@ -45,12 +41,12 @@ function App() {
               <Profile />
             </ProtectedRoute>
           }
-        >
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
-        </Route>
+        />
 
-        {/* Catch-all Redirect */}
+        {/* Dynamic Route for Blog Posts */}
+        <Route path="/blog/:id" element={<BlogPost />} />
+
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
