@@ -7,7 +7,6 @@ const AddRecipeForm = () => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
 
-  // Validation function
   const validate = () => {
     const newErrors = {};
 
@@ -27,9 +26,8 @@ const AddRecipeForm = () => {
     e.preventDefault();
     setSuccess("");
 
-    if (!validate()) return; // Stop if validation fails
+    if (!validate()) return;
 
-    // Mock submission
     const newRecipe = {
       id: Date.now(),
       title,
@@ -51,19 +49,24 @@ const AddRecipeForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6 text-center">Add New Recipe</h1>
+    <div className="max-w-lg mx-auto p-4 md:p-6">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+        Add New Recipe
+      </h1>
 
       {success && <p className="text-green-500 mb-4">{success}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 bg-white p-6 md:p-8 rounded-lg shadow-md"
+      >
         <div>
           <label className="block mb-1 font-semibold">Recipe Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             placeholder="Enter recipe title"
           />
           {errors.title && <p className="text-red-500 mt-1">{errors.title}</p>}
@@ -76,7 +79,7 @@ const AddRecipeForm = () => {
           <textarea
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             placeholder="e.g. 200g spaghetti, 100g bacon, 2 eggs"
             rows={3}
           ></textarea>
@@ -92,7 +95,7 @@ const AddRecipeForm = () => {
           <textarea
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             placeholder="Step 1. Step 2. Step 3."
             rows={4}
           ></textarea>
@@ -101,7 +104,7 @@ const AddRecipeForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors shadow-md"
         >
           Submit Recipe
         </button>
